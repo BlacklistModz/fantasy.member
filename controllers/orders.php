@@ -17,16 +17,16 @@ class Orders extends Controller {
             if( empty($item) ) $this->error();
 
             $this->view->setData('topbar', array(
-                'title' => array( 0 => 
-                    array( 'text' => '<i class="icon-cube"></i> Orders ('.$item['code'].')' ),
+                'title' => array( 0 =>
+                    array( 'text' => '<i class="icon-shopping-cart"></i> Orders ('.$item['code'].')' ),
                 ),
                 'nav' => array(
-                    0 => array(
-                                    // 'type' => 'link',
-                        'icon' => 'icon-remove',
-                                    // 'text' => 'Cancel',
-                        'url' => URL.'mobile/orders'
-                    ),
+                    // 0 => array(
+                    //                 // 'type' => 'link',
+                    //     'icon' => 'icon-remove',
+                    //                 // 'text' => 'Cancel',
+                    //     'url' => URL.'mobile/orders'
+                    // ),
                 )
             ) );
 
@@ -44,8 +44,8 @@ class Orders extends Controller {
             $total_qty = $this->model->summaryItemCusOrder($this->me['id']);
 
             $this->view->setData('topbar', array(
-                'title' => array( 0 => 
-                    array( 'text' => '<i class="icon-cube"></i> Orders ('.$results['total'].')' ),
+                'title' => array( 0 =>
+                    array( 'text' => '<i class="icon-shopping-cart"></i> Orders ('.$results['total'].')' ),
                 ),
                 'nav' => array(
                 	0 => array(

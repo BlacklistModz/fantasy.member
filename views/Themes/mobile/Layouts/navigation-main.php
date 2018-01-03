@@ -25,7 +25,7 @@ $info[] = array('key'=>'home','text'=>'Home','link'=>$url,'icon'=>'home');
 
 #search
 // $menu1[] = array('key'=>'customers', 'text'=>'Customers', 'link'=>$url.'customers', 'icon'=>'users');
-$menu1[] = array('key'=>'orders', 'text'=>'Orders', 'link'=>$url.'orders', 'icon'=>'cube');
+$menu1[] = array('key'=>'orders', 'text'=>'Orders', 'link'=>$url.'orders', 'icon'=>'shopping-cart');
 echo $this->fn->manage_nav($menu1);
 
 #setting
