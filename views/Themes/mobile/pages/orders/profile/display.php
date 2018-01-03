@@ -1,13 +1,13 @@
 <div class="web-profile">
 
 	<div class="web-profile-header">
-		<h1 class="fwb"><i class="icon-cube"></i> <?=$this->item['code']?></h1>
+		<h1 class="fwb"><i class="icon-shopping-cart"></i> <?=$this->item['code']?></h1>
 	</div>
 
 	<div class="web-profile-content post">
-		
+
 		<table class="table-meta">
-			<?php 
+			<?php
 			$a = array();
 			$a[] = array('key'=>'user_code', 'icon'=>'address-book-o', 'label'=>'รหัส');
 			$a[] = array('key'=>'user_name', 'icon'=>'user', 'label'=>'ชื่อร้านค้า');
@@ -15,7 +15,7 @@
 
 			foreach ($a as $key => $value) {
 				if( $value['key']=='net_price' ) {
-					$this->item[$value['key']] = number_format($this->item[$value['key']]);
+					$this->item[$value['key']] = '<span style="color:red;">'.number_format($this->item[$value['key']]).' ฿</span>';
 				}
 				echo '<tr>
 						<td class="label">
@@ -44,14 +44,14 @@
 							<td><?=$num?>. <?=$value['name']?></td>
 							<td class="tac"><?=number_format($value['price'])?></td>
 							<td class="tac"><?=number_format($value['discount'])?></td>
-							<td class="tac"><?=number_format($value['balance'])?></td>
+							<td class="tar"><?=number_format($value['balance'])?>&nbsp;</td>
 						</tr>
 					<?php } ?>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td class="tac fwb">ยอดรวมเงิน <?=$num?> รายการ</td>
-						<td colspan="3" class="tac fwb"><?=$this->item['net_price']?></td>
+						<td colspan="3" class="tar fwb" style="font-size:20px;"><?=$this->item['net_price']?> &nbsp;</td>
 					</tr>
 				</tfoot>
 			</table>
