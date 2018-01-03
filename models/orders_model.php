@@ -416,7 +416,7 @@ class Orders_model extends Model{
         }
         return $data;
     }
-    public function setItemCusOrder($data){
+    public function setItemCusOrder(&$data){
         $data['updated_at'] = date("c");
         if( !empty($data['id']) ){
             $id = $data['id'];
@@ -426,6 +426,7 @@ class Orders_model extends Model{
         else{
             $data['created_at'] = date("c");
             $this->db->insert("customer_order_items", $data);
+            $data['id'] = $this->db->lastInsertId();
         }
     }
     public function getItemCus($id){
@@ -466,5 +467,89 @@ class Orders_model extends Model{
         }
 
         return $total;   
+    }
+
+    public function getSummary($item=array()){
+
+        $data = array();
+        $discount = array();
+
+        $total = 0;
+        $total_price = array();
+        $total_real_price = array();
+
+        foreach ($item as $key => $value) {
+            $_dis = $this->query('discounts')->getDiscountItem($value['products_id']);
+            if( !empty($_dis) ){
+                if( empty($discount[$_dis['id']]['qty']) ){
+                    $discount[$_dis['id']]['qty'] = 0;
+                }
+                $discount[$_dis['id']]['qty'] += $value['quantity'];
+                $discount[$_dis['id']]['price'] = $value['price'];
+                $discount[$_dis['id']]['discount'] = $_dis;
+            }
+            $total += $value['prices'];
+        }
+
+        foreach ($discount as $key => $value) {
+            if( $value['qty'] >= 6 ){
+                if( $value['qty'] >= 72 ){
+                    $price = $value['qty']*$value['discount']["price_6"];
+                    $data['id'][$key] = $value['discount']['price_6'];
+                }
+                elseif( $value['qty'] >= 48 ){
+                    $price = $value['qty']*$value['discount']["price_5"];
+                    $data['id'][$key] = $value['discount']['price_5'];
+                }
+                elseif( $value['qty'] >= 36 ){
+                    $price = $value['qty']*$value['discount']["price_4"];
+                    $data['id'][$key] = $value['discount']['price_4'];
+                }
+                elseif( $value['qty'] >= 24 ){
+                    $price = $value['qty']*$value['discount']["price_3"];
+                    $data['id'][$key] = $value['discount']['price_3'];
+                }
+                elseif( $value['qty'] >= 12 ){
+                    $price = $value['qty']*$value['discount']["price_2"];
+                    $data['id'][$key] = $value['discount']['price_2'];
+                }
+                else{
+                    $price = $value['qty']*$value['discount']["price_1"];
+                    $data['id'][$key] = $value['discount']['price_1'];
+                }
+
+                if( empty($total_price[$key]) ){
+                    $total_price[$key] = 0;
+                }
+                $total_price[$key] += $price;
+            }
+            $total_real_price[$key] = $value['price'] * $value['qty'];
+        }
+
+        $discount_total = 0;
+        foreach ($total_real_price as $key => $value) {
+            if( !empty($total_price[$key]) ){
+                $discount_total += $value - $total_price[$key];
+            }
+        }
+        $amount = $total - $discount_total;
+
+        $data['total'] = $total;
+        $data['discount'] = $discount_total;
+        $data['amount'] = $amount;
+
+        return $data;
+    }
+
+    public function getTotal($item=array()){
+        $data['total'] = 0;
+        $data['discount'] = 0;
+        $data['amount'] = 0;
+        foreach ($item as $key => $value) {
+            $data['total'] += $value['price'] * $value['quantity'];
+            $data['discount'] += $value['discount'] * $value['quantity'];
+            $data['amount'] += $value['prices'];
+        }
+        return $data;
     }
 }

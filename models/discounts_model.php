@@ -129,4 +129,15 @@ class Discounts_Model extends Model{
     public function unsetItem($id){
     	$this->db->delete("discounts_items", "item_id={$id}");
     }
+    public function getDiscountItem($id=null){
+
+        $sth = $this->db->prepare("SELECT g.* FROM discounts_group g LEFT JOIN discounts_items di ON g.dis_id=di.item_dis_id WHERE di.item_parent_id=:id LIMIT 1");
+        $sth->execute( array(
+            ':id' => $id
+        ) );
+
+        return $sth->rowCount()==1
+            ? $this->convert( $sth->fetch( PDO::FETCH_ASSOC ) )
+            : array();
+    }
 }

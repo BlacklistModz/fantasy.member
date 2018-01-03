@@ -28,7 +28,7 @@
 
 							<div class="rfloat  icon tac mrm">
 								<div class="clearfix">
-									<form action="'.URL.'orders/updateItemCusOrder" class="js-submit-form" data-price="'.$value['price'].'">
+									<form class="js-form" method="POST" data-id="'.$value['id'].'">
 										<div class="form-flex">
 											<div>
 												<button type="button" class="btn js-remove"><i class="icon-minus"></i> </button>
@@ -41,8 +41,8 @@
 											</div>
 										</div>
 										<div class="clearfix mts">
-											<button class="btn btn-green js-submit" type="submit"><i class="icon-retweet"></i> อัพเดต</button>
-											<a data-id="'.$value['id'].'" data-prices="'.$value['prices'].'" class="btn btn-red js-del" data-url="'.URL.'orders/del_cus_item"><i class="icon-trash"></i></a>
+											<a class="btn btn-green submit"><i class="icon-retweet"></i> อัพเดต</a>
+											<a class="btn btn-red js-del" data-url="'.URL.'orders/del_cus_item"><i class="icon-trash"></i></a>
 										</div>
 						<input type="hidden" name="id" value="'.$value['id'].'">
 					</form>
@@ -55,6 +55,7 @@
 	else{
 		echo '<div class="uiBoxGray pal"><h2 class="tac" style="color:red;">ไม่มีการสั่งซื้อสินค้า</h2></div>';
 	}
+
 	?>
 
 	<div class="uiBoxLightblue mtm">
@@ -62,15 +63,15 @@
 			<table>
 				<tr>
 					<td width="50%" align="left" class="fwb">รวมเงิน : </td>
-					<td width="50%" align="left"><span id="price"><?= !empty($this->order) ? number_format($this->order['net_price']) : "0" ?></span></td>
+					<td width="50%" align="left"><span id="total"><?= !empty($this->order) ? number_format($this->order['price']) : "0" ?></span></td>
 				</tr>
 				<tr>
 					<td width="50%" align="left" class="fwb">หักส่วนลด : </td>
-					<td width="50%" align="left">0</td>
+					<td width="50%" align="left"><span id="discount"><?= !empty($this->order) ? number_format($this->order['discount']) : "0" ?></td>
 				</tr>
 				<tr>
 					<td width="50%" align="left" class="fwb">ยอดสุทธิ</td>
-					<td width="50%" align="left" class="fwb" style="color:red;"><span id="total"><?= !empty($this->order) ? number_format($this->order['net_price']) : "0" ?></span></td>
+					<td width="50%" align="left" class="fwb" style="color:red;"><span id="amount"><?= !empty($this->order) ? number_format($this->order['net_price']) : "0" ?></span></td>
 				</tr>
 			</table>
 		</div>

@@ -32,16 +32,18 @@
 			<table class="table table-bordered mtl" width="100%">
 				<thead>
 					<tr>
-						<th class="name" width="55%">สินค้า</th>
-						<th class="price" style="color:green" width="15%">จำนวน</th>
+						<th class="name" width="40%">สินค้า</th>
+						<th class="status" width="15%">จำนวน</th>
+						<th class="price" style="color:green" width="15%">ราคา</th>
 						<th class="price" width="15%">ส่วนลด</th>
-						<th class="price" style="color:red" width="15%">เงิน</th>
+						<th class="price" style="color:red" width="15%">รวม</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php $num=0; foreach ($this->item['items'] as $key => $value) { $num++ ?>
 						<tr>
 							<td><?=$num?>. <?=$value['name']?></td>
+							<td class="tac"><?=number_format($value['qty'])?></td>
 							<td class="tac"><?=number_format($value['price'])?></td>
 							<td class="tac"><?=number_format($value['discount'])?></td>
 							<td class="tac"><?=number_format($value['balance'])?></td>
@@ -51,7 +53,7 @@
 				<tfoot>
 					<tr>
 						<td class="tac fwb">ยอดรวมเงิน <?=$num?> รายการ</td>
-						<td colspan="3" class="tac fwb"><?=$this->item['net_price']?></td>
+						<td colspan="4" class="tac fwb"><?=$this->item['net_price']?></td>
 					</tr>
 				</tfoot>
 			</table>

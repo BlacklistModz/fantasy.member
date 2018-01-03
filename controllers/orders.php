@@ -109,15 +109,15 @@ class Orders extends Controller {
 		$item = $this->model->query('products')->get($_POST["id"]);
 		if( empty($item) ) $this->error();
 
-		$pro_price = !empty($item['pricing']) ? $item['pricing']['frontend'] : $item['pds_price_frontend'];
+		$pro_price = !empty($item['pricing']) ? $item['pricing']['frontend'] : 0;
 		$total_pro_price = $pro_price * $_POST["quantity"];
 
 		$order = $this->model->getCusOrder($this->me['id'], array('customer'=>$_POST["cus_id"], 'not_delete'=>true));
 
 		if( !empty($order) ){
 			$id = $order['id'];
-			$data['net_price'] = $order['net_price'] + $total_pro_price;
-			$this->model->updateCusOrder($id, $data);
+			// $data['net_price'] = $order['net_price'] + $total_pro_price;
+			// $this->model->updateCusOrder($id, $data);
 		}
 		else{
 			$sale = $this->model->query('sales')->getCode($this->me['sale_code']);
@@ -148,10 +148,43 @@ class Orders extends Controller {
 				$postData['id'] = $_item['id'];
 				$postData['quantity'] += $_item['quantity'];
 				// $postData['price'] = $pro_price;
-				$postData['prices'] += $total_pro_price;
+				$postData['prices'] = $pro_price * $postData['quantity'];
+			}
+			$this->model->setItemCusOrder($postData);
+
+			if( empty($_item) ){
+				$_item['id'] = $postData['id'];
+			}
+			$_item['quantity'] = $postData['quantity'];
+
+			$_order = $this->model->get_cusOrder($id);
+			if( !empty($_order['items']) && !empty($_item) ){
+				$total = $this->model->getSummary($_order['items']);
+				$_discount = $this->model->query('discounts')->getDiscountItem($_POST["id"]);
+				if( !empty($_discount) ){
+					foreach ($total['id'] as $key => $value) {
+						if( $_discount['id'] == $key ){
+							$postData = array(
+								'id'=>$_item['id'],
+								'discount'=>$pro_price - $value,
+								'prices'=>$value * $_item['quantity']
+							);
+							$this->model->setItemCusOrder($postData);
+							break;
+						}
+					}
+				}
 			}
 
-			$this->model->setItemCusOrder($postData);
+			$n_order = $this->model->get_cusOrder($id);
+			$g_total = $this->model->getTotal($n_order['items']);
+
+			$data = array(
+				'net_price'=>$g_total['amount'],
+				'price'=>$g_total['total'],
+				'discount'=>$g_total['discount']
+			);
+			$this->model->updateCusOrder($id, $data);
 		}
 
 		$arr['message'] = 'เลือกสินค้าเรียบร้อย';
@@ -196,7 +229,7 @@ class Orders extends Controller {
 		if( empty($order) ) $this->error();
 
 		$product = $this->model->query('products')->get($item['products_id']);
-		$pro_price = !empty($product['pricing']) ? $product['pricing']['frontend'] : $product['pds_price_frontend'];
+		$pro_price = !empty($product['pricing']) ? $product['pricing']['frontend'] : 0;
 		$total_pro_price =  $pro_price * $_POST["quantity"];
 
 		$postData['id'] = $item['id'];
@@ -204,11 +237,49 @@ class Orders extends Controller {
 		$postData['prices'] = $total_pro_price;
 		$this->model->setItemCusOrder($postData);
 
-		$net_price = ($order['net_price'] - $item['prices']) + $total_pro_price;
-		$this->model->updateCusOrder($order['id'], array('net_price'=>$net_price));
+		$g_order = $this->model->get_cusOrder($item['customer_orders_id']);
+		$_total = $this->model->getSummary($g_order['items']);
+		$_discount = $this->model->query('discounts')->getDiscountItem($item["products_id"]);
+		if( !empty($_discount) ){
+			foreach ($_total['id'] as $key => $value) {
+				if( $_discount['id'] == $key ){
+					$postData = array(
+						'id'=>$item['id'],
+						'discount'=>$pro_price - $value,
+						'prices'=>$value * $_POST['quantity']
+					);
+					$this->model->setItemCusOrder($postData);
+					break;
+				}
+			}
+		}
 
-		$arr['message'] = 'อัพเดตเรียบร้อย';
-		echo json_encode($arr);
+		$_order = $this->model->itemsCusOrder($item['customer_orders_id']);
+		$g_summary = $this->model->getSummary($_order);
+		foreach ($_order as $key => $value) {
+			$_dis = $this->model->query('discounts')->getDiscountItem($value['products_id']);
+			if( !empty($_dis) ){
+				foreach ($g_summary['id'] as $id => $price) {
+					if( $id == $_dis['id'] ){
+						$itemData = array(
+							'id' => $value['id'],
+							'discount' => $value['price'] - $price
+						);
+						$this->model->setItemCusOrder($itemData);
+					}
+				}
+			}
+		}
+
+		$_items = $this->model->itemsCusOrder($item['customer_orders_id']);
+		$total = $this->model->getTotal($_items);
+		$orderData = array(
+			'price' => $total['total'],
+			'discount' => $total['discount'],
+			'net_price' => $total['amount']
+		);
+		$this->model->updateCusOrder($order['id'], $orderData);
+		echo json_encode($total);
 	}
 	public function del_cus_item($id=null){
 		$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
@@ -219,14 +290,31 @@ class Orders extends Controller {
 		$order = $this->model->get_cusOrder($item['customer_orders_id']);
 		if( empty($order) ) $this->error();
 
-		$this->model->updateCusOrder($order['id'], array('net_price'=>$order['net_price'] - $item['prices']));
+		// $this->model->updateCusOrder($order['id'], array('net_price'=>$order['net_price'] - $item['prices']));
 		$this->model->unsetItemCusOrder($id);
 
 		$checkItem = $this->model->checkItemCusOrder($order['id']);
 		if( empty($checkItem) ) $this->model->deleteCusOrder($order['id']);
 
-		$arr['message'] = 'ยกเลิกรายการเรียบร้อยแล้ว';
-		echo json_encode($arr);
+		$total = array(
+			'total'=>0,
+			'discount'=>0,
+			'amount'=>0
+		);
+		if( !empty($checkItem) ){
+			$_order = $this->model->get_cusOrder($item['customer_orders_id']);
+			$total = $this->model->getTotal($_order['items']);
+
+			$orderData = array(
+				'price' => $total['total'],
+				'discount' => $total['discount'],
+				'net_price' => $total['amount']
+			);
+			$this->model->updateCusOrder($order['id'], $orderData);
+		}
+
+		// $arr['message'] = 'ยกเลิกรายการเรียบร้อยแล้ว';
+		echo json_encode($total);
 	}
 	public function confirmOrder($id=null){
 		$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
@@ -234,6 +322,8 @@ class Orders extends Controller {
 
 		$order = $this->model->get_cusOrder($id, array('items'=>true));
 		if( empty($order) ) $this->error();
+
+		// $total = $this->model->getTotal( $order['items'] );
 
 		$postData = array(
 			'site_id'=>null,
@@ -250,7 +340,7 @@ class Orders extends Controller {
 			'ord_status'=>'A',
 			'order_note'=>'',
 			'ord_net_price'=>$order['net_price'],
-			'ord_discount_extra'=>'0.00',
+			'ord_discount_extra'=>$order['discount'],
 			'ord_tax'=>'0.00'
 		);
 		$this->model->insert($postData);
