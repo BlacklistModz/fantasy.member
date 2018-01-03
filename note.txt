@@ -1,0 +1,6 @@
+
+/* Page Errr */
+100: ไม่มีที่อยู่ที่ส่งค่าไป ไฟล์ form ที่ submit
+101: ไม่มีค่าส่งกลับมา จาก FOrm // not result processForm
+
+102: load dialog Dialog
