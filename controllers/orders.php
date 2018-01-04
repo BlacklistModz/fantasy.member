@@ -241,20 +241,21 @@ class Orders extends Controller {
 		$_total = $this->model->getSummary($g_order['items']);
 		$_discount = $this->model->query('discounts')->getDiscountItem($item["products_id"]);
 		if( !empty($_discount) ){
-			foreach ($_total['id'] as $key => $value) {
-				if( $_discount['id'] == $key ){
-					$postData = array(
-						'id'=>$item['id'],
-						'discount'=>$pro_price - $value,
-						'prices'=>$value * $_POST['quantity']
-					);
-					$this->model->setItemCusOrder($postData);
-					break;
+			if( !empty($_total['id']) ){
+				foreach ($_total['id'] as $key => $value) {
+					if( $_discount['id'] == $key ){
+						$postData = array(
+							'id'=>$item['id'],
+							'discount'=>$pro_price - $value,
+							'prices'=>$value * $_POST['quantity']
+						);
+						$this->model->setItemCusOrder($postData);
+					}
 				}
 			}
 		}
 
-		$_order = $this->model->itemsCusOrder($item['customer_orders_id']);
+		/* $_order = $this->model->itemsCusOrder($item['customer_orders_id']);
 		$g_summary = $this->model->getSummary($_order);
 		foreach ($_order as $key => $value) {
 			$_dis = $this->model->query('discounts')->getDiscountItem($value['products_id']);
@@ -269,7 +270,7 @@ class Orders extends Controller {
 					}
 				}
 			}
-		}
+		} */
 
 		$_items = $this->model->itemsCusOrder($item['customer_orders_id']);
 		$total = $this->model->getTotal($_items);

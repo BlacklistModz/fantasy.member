@@ -41,7 +41,7 @@
 											</div>
 										</div>
 										<div class="clearfix mts">
-											<a class="btn btn-green submit"><i class="icon-retweet"></i> อัพเดต</a>
+											<a class="btn btn-green submit" href="#"><i class="icon-retweet"></i> อัพเดต</a>
 											<a class="btn btn-red js-del" data-url="'.URL.'orders/del_cus_item"><i class="icon-trash"></i></a>
 										</div>
 						<input type="hidden" name="id" value="'.$value['id'].'">

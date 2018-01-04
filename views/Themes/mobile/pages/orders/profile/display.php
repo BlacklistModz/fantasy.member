@@ -34,8 +34,8 @@
 					<tr>
 						<th class="name" width="40%">สินค้า</th>
 						<th class="status" width="15%">จำนวน</th>
-						<th class="price" style="color:green" width="15%">ราคา</th>
-						<th class="price" width="15%">ส่วนลด</th>
+						<th class="price" style="color:green" width="15%">ราคา/ชิ้น</th>
+						<th class="price" width="15%">ส่วนลด/ชิ้น</th>
 						<th class="price" style="color:red" width="15%">รวม</th>
 					</tr>
 				</thead>
