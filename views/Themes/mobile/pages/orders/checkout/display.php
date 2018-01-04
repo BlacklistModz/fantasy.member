@@ -76,7 +76,19 @@
 			</table>
 		</div>
 	</div>
-	<?php if( !empty($this->order) ) { ?>
+	<?php 
+	if( !empty($this->order) ) { 
+		$form = new Form();
+		$form = $form->create()
+					 ->elem('div')
+					 ->addClass('form-insert');
+		$form 	->field('order_note')
+				->label('หมายเหตุ')
+				->addClass('inputtext')
+				->attr('data-plugins', 'autosize')
+				->type('textarea')
+				->value('');
+	?>
 	<footer>
 		<div class="clearfix mtl">
 			<div class="span12 tac">
