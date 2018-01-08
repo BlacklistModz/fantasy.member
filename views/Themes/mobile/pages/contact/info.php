@@ -16,8 +16,9 @@
 			foreach ($a as $key => $value) {
 				if( empty($value) ) continue;
 				if( $value['key'] == 'phone' ){
+						$this->system[$value['key']] = '<a href="tel:'.$this->system[$value['key']].'">'.$this->system[$value['key']].'</a>';
 					if( !empty($this->system['phone_2']) ){
-						$this->system[$value['key']].=' ,'.$this->system['phone_2'];
+						$this->system[$value['key']].=' ,<a href="tel:'.$this->system['phone_2'].'">'.$this->system['phone_2'].'</a>';
 					}
 				}
 				echo '<tr>

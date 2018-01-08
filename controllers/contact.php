@@ -47,6 +47,8 @@ class Contact extends Controller {
     }
 
     public function bank(){
-
+        $results = $this->model->query('payments')->account( array('show'=>true) );
+        $this->view->setData('results', $results);
+        $this->view->render('contact/bank');
     }
 }
