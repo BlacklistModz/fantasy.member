@@ -3,7 +3,6 @@
 	<div class="web-profile-header">
 		<h1 class="fwb"><i class="icon-handshake-o"></i> ติดต่อเรา</h1>
 	</div>
-
 	<div class="web-profile-content post">
 		<table class="table-meta">
 			<?php
@@ -31,6 +30,7 @@
 			?>
 		</table>
 		<table class="table-meta tac mtl">
+
 			<tr>
 				<td width="33.33%">
 					<ul>
@@ -39,12 +39,47 @@
 					</ul>
 				</td>
 				<td width="33.33%">
-					<a class="btn btn-blue btn-jumbo"><i class="icon-phone"></i></a>
+					<ul>
+						<li><a href="tel:<?=$this->system['mobile_phone_2']?>" class="btn btn-blue btn-jumbo"><i class="icon-phone"></i></a></li>
+						<li><label for="phone_2" class="fwb">ลูกค้าสัมพันธ์</label></li>
+					</ul>
 				</td>
 				<td width="33.33%">
-					<a class="btn btn-blue btn-jumbo"><i class="icon-phone"></i></a>
+					<ul>
+						<li><a href="tel:<?=$this->system['mobile_phone_3']?>" class="btn btn-red btn-jumbo"><i class="icon-phone"></i></a></li>
+						<li><label for="phone_3" class="fwb">ช่าง</label></li>
+					</ul>
 				</td>
 			</tr>
+
+			<!-- สำหรับเว้นบรรทัด -->
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+
+			<tr>
+				<td width="33.33%">
+					<ul>
+						<li><a href="http://line.me/ti/p/~<?=$this->system['line_1']?>"><img src="<?=IMAGES?>/icon/line-me.png" style="height:60px; width:auto;"></a></li>
+						<li><label for="phone_1" class="fwb">ฝ่ายบัญชี</label></li>
+					</ul>
+				</td>
+				<td width="33.33%">
+					<ul>
+						<li><a href="http://line.me/ti/p/~<?=$this->system['line_2']?>"><img src="<?=IMAGES?>/icon/line-me.png" style="height:60px; width:auto;"></a></li>
+						<li><label for="phone_2" class="fwb">ลูกค้าสัมพันธ์</label></li>
+					</ul>
+				</td>
+				<td width="33.33%">
+					<ul>
+						<li><a href="http://line.me/ti/p/~<?=$this->system['line_3']?>"><img src="<?=IMAGES?>/icon/line-me.png" style="height:60px; width:auto;"></a></li>
+						<li><label for="phone_3" class="fwb">ช่าง</label></li>
+					</ul>
+				</td>
+			</tr>
+
 		</table>
 	</div>
 </div>
