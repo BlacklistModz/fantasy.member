@@ -18,7 +18,7 @@ class Orders extends Controller {
 
             $this->view->setData('topbar', array(
                 'title' => array( 0 =>
-                    array( 'text' => '<i class="icon-shopping-cart"></i> Orders ('.$item['code'].')' ),
+                    array( 'text' => '<i class="icon-shopping-basket"></i> Orders ('.$item['code'].')' ),
                 ),
                 'nav' => array(
                     // 0 => array(
@@ -45,7 +45,7 @@ class Orders extends Controller {
 
             $this->view->setData('topbar', array(
                 'title' => array( 0 =>
-                    array( 'text' => '<i class="icon-shopping-cart"></i> Orders ('.$results['total'].')' ),
+                    array( 'text' => '<i class="icon-shopping-basket"></i> Orders ('.$results['total'].')' ),
                 ),
                 'nav' => array(
                 	0 => array(

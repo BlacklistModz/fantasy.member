@@ -1,7 +1,7 @@
 <div class="web-profile">
 
 	<div class="web-profile-header">
-		<h1 class="fwb"><i class="icon-shopping-cart"></i> <?=$this->item['code']?></h1>
+		<h1 class="fwb"><i class="icon-shopping-basket"></i> <?=$this->item['code']?></h1>
 	</div>
 
 	<div class="web-profile-content post">
@@ -53,7 +53,7 @@
 				<tfoot>
 					<tr>
 						<td class="tac fwb">ยอดรวมเงิน <?=$num?> รายการ</td>
-						<td colspan="4" class="tac fwb" style="font-size:20px;"><?=$this->item['net_price']?></td>
+						<td colspan="4" class="tar fwb" style="font-size:20px;"><?=$this->item['net_price']?>&nbsp;</td>
 					</tr>
 				</tfoot>
 			</table>

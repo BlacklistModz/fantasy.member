@@ -9,7 +9,7 @@
 </style>
 
 <div class="row clearfix mtl">
-	<div class="lfloat"><h3><i class="icon-shopping-cart"></i> <?=$this->item['name_th']?></h3></div>
+	<div class="lfloat"><h3><i class="icon-shopping-basket"></i> <?=$this->item['name_th']?></h3></div>
 	<div class="rfloat" role="search">
 		<form class="form-search" action="" id="global-nav-search">
 			<label class="visuallyhidden" for="search-query">Search query</label>
