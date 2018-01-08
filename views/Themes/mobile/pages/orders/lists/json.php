@@ -17,7 +17,7 @@ foreach ($this->results['lists'] as $key => $value) {
 				'<div class="spacer"></div>'.
 					'<div class="massages">'.
 					'<div class="ui-score"></div>'.
-					'<div class="title fwb"><i class="icon-shopping-basket"></i> '.$value['code'].'</div>'.
+					'<div class="title fwb"><i class="icon-shopping-cart"></i> '.$value['code'].'</div>'.
 					'<div class="fwn"><i class="icon-clock-o"></i> '.date("d/m/Y", strtotime($value['date'])).'</div>'.
 					'<div class="fwb" style="color:red;"><i class="icon-money"></i> '.number_format($value['net_price'], 2).' ฿ </div>'.
 				'</div>'.
