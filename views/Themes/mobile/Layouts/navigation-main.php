@@ -28,6 +28,12 @@ $info[] = array('key'=>'home','text'=>'Home','link'=>$url,'icon'=>'home');
 $menu1[] = array('key'=>'orders', 'text'=>'Order list', 'link'=>$url.'orders', 'icon'=>'shopping-basket');
 echo $this->fn->manage_nav($menu1);
 
+#contact
+$contact[] = array('key'=>'contact', 'text'=>'ติดต่อเรา', 'link'=>$url.'contact', 'icon'=>'handshake-o');
+$contact[] = array('key'=>'feedback', 'text'=>'คำติชม', 'link'=>$url.'contact/feedback', 'icon'=>'thumbs-o-up');
+$contact[] = array('key'=>'bank', 'text'=>'วิธีชำระเงิน', 'link'=>$url.'contact/bank', 'icon'=>'money');
+echo $this->fn->manage_nav($contact);
+
 #setting
 $setting[] = array('key'=>'settings', 'text'=>'เปลี่ยนรหัสผ่าน', 'link'=>$url.'me/change_password', 'icon'=>'key');
 echo $this->fn->manage_nav($setting);
