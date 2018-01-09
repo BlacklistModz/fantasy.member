@@ -35,19 +35,19 @@
 			<tr>
 				<td width="33.33%">
 					<ul>
-						<li><a href="tel:<?=$this->system['mobile_phone']?>" class="btn btn-green btn-jumbo" style="border-radius: 5px;"><i class="icon-phone"></i></a></li>
+						<li><a href="tel:<?=$this->system['mobile_phone']?>" class="btn btn-green btn-jumbo" style="border-radius: 5px; height:60px; width:60px; font-size: 30px; padding-top: 5px; padding-left: 10px; font-size:50px;"><i class="icon-phone"></i></a></li>
 						<li><label for="phone_1" class="fwb">ฝ่ายบัญชี</label></li>
 					</ul>
 				</td>
 				<td width="33.33%">
 					<ul>
-						<li><a href="tel:<?=$this->system['mobile_phone_2']?>" class="btn btn-blue btn-jumbo" style="border-radius: 5px;"><i class="icon-phone"></i></a></li>
+						<li><a href="tel:<?=$this->system['mobile_phone_2']?>" class="btn btn-blue btn-jumbo" style="border-radius: 5px; height:60px; width:60px; font-size: 30px; padding-top: 5px; padding-left: 10px; font-size:50px;"><i class="icon-phone"></i></a></li>
 						<li><label for="phone_2" class="fwb">ลูกค้าสัมพันธ์</label></li>
 					</ul>
 				</td>
 				<td width="33.33%">
 					<ul>
-						<li><a href="tel:<?=$this->system['mobile_phone_3']?>" class="btn btn-red btn-jumbo" style="border-radius: 5px;"><i class="icon-phone"></i></a></li>
+						<li><a href="tel:<?=$this->system['mobile_phone_3']?>" class="btn btn-red btn-jumbo" style="border-radius: 5px; height:60px; width:60px; font-size: 30px; padding-top: 5px; padding-left: 10px; font-size:50px;"><i class="icon-phone"></i></a></li>
 						<li><label for="phone_3" class="fwb">ช่าง</label></li>
 					</ul>
 				</td>
@@ -91,7 +91,7 @@
 			<tr>
 				<td width="100%" colspan="3">
 					<ul>
-						<li><a href="<?=$this->system['facebook']?>" class="btn btn-blue btn-jumbo" style="border-radius: 5px; width: 50%; margin: 0px 10px 0px 10px;"><i class="icon-facebook"></i></a></li>
+						<li><a href="<?=$this->system['facebook']?>"><img src="<?=IMAGES?>/icon/fb.png" style="height:60px; width:auto;"></a></li>
 						<li><label for="phone_3" class="fwb">Facebook</label></li>
 					</ul>
 				</td>
