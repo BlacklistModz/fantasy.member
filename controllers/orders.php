@@ -158,20 +158,17 @@ class Orders extends Controller {
 			$_item['quantity'] = $postData['quantity'];
 
 			$_order = $this->model->get_cusOrder($id);
-			if( !empty($_order['items']) && !empty($_item) ){
-				$total = $this->model->getSummary($_order['items']);
-				$_discount = $this->model->query('discounts')->getDiscountItem($_POST["id"]);
-				if( !empty($_discount) ){
-					foreach ($total['id'] as $key => $value) {
-						if( $_discount['id'] == $key ){
-							$postData = array(
-								'id'=>$_item['id'],
-								'discount'=>$pro_price - $value,
-								'prices'=>$value * $_item['quantity']
-							);
-							$this->model->setItemCusOrder($postData);
-							break;
-						}
+			$total = $this->model->getSummary($_order['items']);
+			$_discount = $this->model->query('discounts')->getDiscountItem($_POST["id"]);
+			if( !empty($_discount) ){
+				foreach ($total['id'] as $key => $value) {
+					if( $_discount['id'] == $key ){
+						$postData = array(
+							'id'=>$_item['id'],
+							'discount'=>$pro_price - $value,
+							'prices'=>$value * $_item['quantity']
+						);
+						$this->model->setItemCusOrder($postData);
 					}
 				}
 			}

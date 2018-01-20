@@ -8,10 +8,9 @@
 		<table class="table-bordered">
 			<thead>
 				<tr>
-					<th width="25%">ชื่อบัญชี</th>
-					<th width="25%">ธนาคาร</th>
-					<th width="30%">เลขที่</th>
-					<th width="20%">สาขา</th>
+					<th width="35%">เลขที่</th>
+					<th width="35%">ชื่อบัญชี</th>
+					<th width="30%">ธนาคาร</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,10 +19,9 @@
 					foreach ($this->results as $key => $value) {
 						?>
 						<tr>
+							<td class="fwb"><?=$value['number']?></td>
 							<td><?=$value['name']?></td>
 							<td class="tac"><?=$value['bank_name']?></td>
-							<td class="fwb tac"><?=$value['number']?></td>
-							<td><?=$value['branch']?></td>
 						</tr>
 						<?php
 					}
